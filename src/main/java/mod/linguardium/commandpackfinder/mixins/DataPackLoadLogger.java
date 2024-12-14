@@ -35,13 +35,13 @@ public class DataPackLoadLogger {
     private CompletableFuture finallyCheckFunctionTags(CompletableFuture future, ResourceReloader.Synchronizer synchronizer, ResourceManager manager) {
         return future.thenRun(()->{
             String type = ((TagGroupLoaderAccessor)this.tagLoader).getDataType();
-            record functiondata(String pack, String when, String functionfile) {
-                @Override
-                public String toString() {
-                    return pack+"\t"+when+"\t"+functionfile;
-                }
-            }
-            List<functiondata> list = new ArrayList<>();
+//            record functiondata(String pack, String when, String functionfile) {
+//                @Override
+//                public String toString() {
+//                    return pack+"\t"+when+"\t"+functionfile;
+//                }
+//            }
+//            List<functiondata> list = new ArrayList<>();
             LOGGER.info("---------------------------------");
             LOGGER.info("Listing McFunction triggers");
             LOGGER.info("---------------------------------");
@@ -49,34 +49,35 @@ public class DataPackLoadLogger {
                pack.getNamespaces(ResourceType.SERVER_DATA).forEach(namespace->{
                   pack.findResources(ResourceType.SERVER_DATA,namespace,type,(identifier, inputStreamInputSupplier) -> {
                       LOGGER.info("{} / {}",pack.getName(),identifier);
-                      try {
-                          InputStreamReader reader = new InputStreamReader(inputStreamInputSupplier.get());
-                          JsonElement element = JsonParser.parseReader(reader);
-                          JsonArray values = element.getAsJsonObject().getAsJsonArray("values");
-                          values.forEach(valueElement->{
-                              String s = valueElement.getAsString();
-                              if (s == null) s = "not_found";
-                              Identifier id = Identifier.tryParse(valueElement.getAsString());
-                              String path = "not_found";
-                              if (id != null) path = id.toString();
-                              list.add(new functiondata(pack.getName(),identifier.toString(),  path));
-                          });
-                          reader.close();
-
-                      } catch (IOException ignored) {
-                          // i don't care enough to deal with that
-                      }
+//                      Maybe that will prevent crashing...
+//                      try {
+//                          InputStreamReader reader = new InputStreamReader(inputStreamInputSupplier.get());
+//                          JsonElement element = JsonParser.parseReader(reader);
+//                          JsonArray values = element.getAsJsonObject().getAsJsonArray("values");
+//                          values.forEach(valueElement->{
+//                              String s = valueElement.getAsString();
+//                              if (s == null) s = "not_found";
+//                              Identifier id = Identifier.tryParse(valueElement.getAsString());
+//                              String path = "not_found";
+//                              if (id != null) path = id.toString();
+//                              list.add(new functiondata(pack.getName(),identifier.toString(),  path));
+//                          });
+//                          reader.close();
+//
+//                      } catch (IOException ignored) {
+//                          // i don't care enough to deal with that
+//                      }
                   });
                });
             });
-            LOGGER.info("---------------------------------");
-            LOGGER.info("Datapack\tRun Trigger\tFunction");
-            LOGGER.info("---------------------------------");
-            LOGGER.info("");
-            LOGGER.info("");
-            list.forEach(d->LOGGER.info(d.toString()));
-            LOGGER.info("");
-            LOGGER.info("");
+//            LOGGER.info("---------------------------------");
+//            LOGGER.info("Datapack\tRun Trigger\tFunction");
+//            LOGGER.info("---------------------------------");
+//            LOGGER.info("");
+//            LOGGER.info("");
+//            list.forEach(d->LOGGER.info(d.toString()));
+//            LOGGER.info("");
+//            LOGGER.info("");
             LOGGER.info("---------------------------------");
         });
     }
