@@ -16,16 +16,10 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-		],
-		"client": [
 		]
 	},
 	"mixins": [
-		"${modid}.mixins.json",
-		{
-			"config": "${modid}.client.mixins.json",
-			"environment": "client"
-		}
+		"${modid}.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=${loader_version}",
