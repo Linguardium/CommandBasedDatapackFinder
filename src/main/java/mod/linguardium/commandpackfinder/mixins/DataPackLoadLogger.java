@@ -54,8 +54,11 @@ public class DataPackLoadLogger {
                           JsonElement element = JsonParser.parseReader(reader);
                           JsonArray values = element.getAsJsonObject().getAsJsonArray("values");
                           values.forEach(valueElement->{
+                              String s = valueElement.getAsString();
+                              if (s == null) s = "not_found";
                               Identifier id = Identifier.tryParse(valueElement.getAsString());
-                              String path = FINDER.toResourcePath(id).toString();
+                              String path = "not_found";
+                              if (id != null) path = FINDER.toResourcePath(id).toString();
                               list.add(new functiondata(pack.getName(),identifier.toString(),  path));
                           });
                           reader.close();
