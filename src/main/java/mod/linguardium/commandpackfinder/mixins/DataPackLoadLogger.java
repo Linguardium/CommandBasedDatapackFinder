@@ -58,7 +58,7 @@ public class DataPackLoadLogger {
                               if (s == null) s = "not_found";
                               Identifier id = Identifier.tryParse(valueElement.getAsString());
                               String path = "not_found";
-                              if (id != null) path = FINDER.toResourcePath(id).toString();
+                              if (id != null) path = id.toString();
                               list.add(new functiondata(pack.getName(),identifier.toString(),  path));
                           });
                           reader.close();
